@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"html/template"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -45,7 +46,9 @@ func check(err error) {
 
 func ParseExample(examplesDir, exampleFileName string) *Example {
 	file, err := os.Open(path.Join(examplesDir, exampleFileName))
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -110,16 +113,22 @@ func ParseExample(examplesDir, exampleFileName string) *Example {
 	}
 
 	err = scanner.Err()
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	b := new(bytes.Buffer)
 	style := styles.Get("autumn")
 	formatter := chromahtml.New(chromahtml.WithClasses(true))
 	lexer := lexers.Get("yaml")
 	iterator, err := lexer.Tokenise(nil, fullCode)
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	err = formatter.Format(b, style, iterator)
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	codeDoc, err := htmlquery.Parse(strings.NewReader(b.String()))
 	codeRows := htmlquery.Find(codeDoc, "//span[@class=\"line\"]")
 
@@ -138,7 +147,9 @@ func ParseExample(examplesDir, exampleFileName string) *Example {
 		if codeRowIdx >= 0 {
 			b := new(bytes.Buffer)
 			err := html.Render(b, codeRows[codeRowIdx])
-			check(err)
+			if err != nil {
+				log.Fatal(err)
+			}
 			row.CodeHTML = template.HTML(b.String())
 			codeRowIdx += 1
 		}
