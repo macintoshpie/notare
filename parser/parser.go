@@ -88,9 +88,10 @@ func ParseExample(examplesDir, exampleFileName string) *Example {
 			if strings.TrimSpace(line) == "" && row.Doc == "" {
 				continue
 			}
-			if strings.TrimSpace(line) != "" {
-				fullCode += line + "\n"
-			}
+			// if strings.TrimSpace(line) != "" {
+			// 	fullCode += line + "\n"
+			// }
+			fullCode += line + "\n"
 
 			row.Code = line
 			if !foundFirstCode && line != "" {
