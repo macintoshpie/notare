@@ -50,13 +50,13 @@
 <p class="footer">By <a href="https://macintoshpie.github.io">Ted Summer</a> | <a href="https://github.com/macintoshpie/ghactionsbyexample">Source</a> | Inspired by <a href="https://gobyexample.com">Go by Example</a></p>
 </div>
 <script>
-    const yamlBody = `{{.FullCode}}`
+    const codeBody = `{{.FullCode}}`
 
     function copy() {
         var body = document.getElementsByTagName('body')[0];
         newTextArea = document.createElement('textarea')
         body.appendChild(newTextArea)
-        newTextArea.value = yamlBody
+        newTextArea.value = codeBody
         newTextArea.select()
 
         try {

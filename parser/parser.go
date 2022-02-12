@@ -120,7 +120,7 @@ func ParseExample(examplesDir, exampleFileName string) *Example {
 	b := new(bytes.Buffer)
 	style := styles.Get("autumn")
 	formatter := chromahtml.New(chromahtml.WithClasses(true))
-	lexer := lexers.Get("yaml")
+	lexer := lexers.Match(exampleFileName)
 	iterator, err := lexer.Tokenise(nil, fullCode)
 	if err != nil {
 		log.Fatal(err)
